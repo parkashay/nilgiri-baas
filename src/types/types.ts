@@ -12,10 +12,25 @@ export type Reservation = {
 }
 
 export type Customer = {
+  id: number;
   name: string;
   avatar?: string;
   phone?: string;
   email?: string;
   address: string;
   bookedRoom: string | number;
+}
+
+export type BreadCrumbType = {
+  title: string;
+  href?: string;
+}
+
+export type CustomerReview = {
+  name: string;
+  avatar: string;
+  rating: number;
+  comment: string;
+  date: string;
+  email?: string;
 }

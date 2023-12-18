@@ -50,7 +50,7 @@ const Header = () => {
               </svg>
             )}
           </button>
-          <h1 className="text-text">Guest-House</h1>
+          <Link href={'/'} className="text-text text-xl font-bold">Nilgiri-Baas</Link>
         </div>
         <div className="flex gap-6 items-center">
           <Profile />

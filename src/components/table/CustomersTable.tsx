@@ -10,6 +10,7 @@ import {
   Input,
   Chip,
   Avatar,
+  Link,
 } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
 import { CiLocationOn, CiMail, CiPhone, CiSearch } from "react-icons/ci";
@@ -53,22 +54,32 @@ const CustomersTable = ({ tableData }: TableProps) => {
         </TableHeader>
         <TableBody emptyContent="No data available">
           {rows.map((data) => (
-            <TableRow key={data.name}>
+            <TableRow key={data.id}>
               <TableCell>
                 <Avatar showFallback src={data.avatar} />
               </TableCell>
-              <TableCell> {data.name} </TableCell>
-              <TableCell> {data.bookedRoom}</TableCell>
-              <TableCell><span className="flex items-center gap-1"> <CiLocationOn /> {data.address}</span> </TableCell>
-              <TableCell className="flex flex-col gap-2">
+              <TableCell>
                 {" "}
-                <Chip variant="flat" startContent={<CiMail />}>
+                <Link href={`/users/${data.id}`} color="success" isBlock showAnchorIcon>{data.name}</Link>{" "}
+              </TableCell>
+              <TableCell> {data.bookedRoom}</TableCell>
+              <TableCell>
+                <span className="flex items-center gap-1">
                   {" "}
-                  {data.email}{" "}
-                </Chip>{" "}
-                <Chip variant="flat" startContent={<CiPhone />}>
-                  {data.phone}
-                </Chip>{" "}
+                  <CiLocationOn /> {data.address}
+                </span>{" "}
+              </TableCell>
+              <TableCell className="flex flex-col gap-2">
+                {data.email && (
+                  <Chip variant="flat" startContent={<CiMail />}>
+                    {data.email}
+                  </Chip>
+                )}
+                {data.phone && (
+                  <Chip variant="flat" startContent={<CiPhone />}>
+                    {data.phone}
+                  </Chip>
+                )}
               </TableCell>
             </TableRow>
           ))}
