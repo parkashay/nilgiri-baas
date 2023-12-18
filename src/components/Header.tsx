@@ -55,6 +55,7 @@ const Header = () => {
         <div className="flex gap-6 items-center">
           <Profile />
           <ThemeSwitch />
+          <Link href={'/'}>test</Link>
         </div>
       </div>
     </header>
