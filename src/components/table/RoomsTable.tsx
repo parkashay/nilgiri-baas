@@ -23,13 +23,16 @@ const RoomsTable = ({ tableData }: TableProps) => {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRows(
       tableData.filter((row) =>
-        String(Object.values(row)).toLowerCase().includes(e.target.value.toLowerCase())
+        String(Object.values(row))
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
       )
     );
   };
   return (
     <section className="flex flex-col w-full">
       <Input
+        size="sm"
         onChange={(e) => handleSearchChange(e)}
         type="text"
         label="Search"
@@ -44,7 +47,7 @@ const RoomsTable = ({ tableData }: TableProps) => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody emptyContent="No data available">
           {rows.map((data) => (
             <TableRow key={data.number}>
               <TableCell> {data.number} </TableCell>
@@ -52,9 +55,13 @@ const RoomsTable = ({ tableData }: TableProps) => {
               <TableCell> NPR. {data.price}/- </TableCell>
               <TableCell>
                 {data.vacancy ? (
-                  <Chip size="sm" variant="flat" color="primary" >available</Chip>
+                  <Chip size="sm" variant="flat" color="primary">
+                    available
+                  </Chip>
                 ) : (
-                  <Chip size="sm" variant="flat" color="danger">booked</Chip>
+                  <Chip size="sm" variant="flat" color="danger">
+                    booked
+                  </Chip>
                 )}
               </TableCell>
             </TableRow>

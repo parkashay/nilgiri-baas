@@ -13,7 +13,9 @@ export type Reservation = {
 
 export type Customer = {
   name: string;
+  avatar?: string;
   phone?: string;
   email?: string;
   address: string;
+  bookedRoom: string | number;
 }
