@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Switch,
   useSwitch,
@@ -19,7 +19,10 @@ const ThemeSwitcher = (props: SwitchProps) => {
     getWrapperProps,
   } = useSwitch(props);
   const { theme, setTheme } = useTheme();
-  setTheme(isSelected ? "dark" : "light");
+  
+  useEffect(() => {
+    setTheme(isSelected ? "dark" : "light");
+  }, [isSelected, setTheme]) // setTheme is included in dep array to omit an eslint warning
   return (
     <div className="flex flex-col gap-2">
       <Component {...getBaseProps()}>

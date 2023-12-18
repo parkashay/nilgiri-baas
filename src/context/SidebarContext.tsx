@@ -13,11 +13,11 @@ interface ContextProps {
 }
 const SidebarContext = createContext<ContextProps>({
   isOpen: false,
-  setIsOpen: () => false ,
+  setIsOpen: () => true,
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <SidebarContext.Provider
       value={{ isOpen, setIsOpen }}

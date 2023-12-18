@@ -33,6 +33,7 @@ const ReservationsTable = ({ tableData }: TableProps) => {
   return (
     <section className="flex w-full flex-col">
       <Input
+        size="sm"
         startContent={<CiSearch size={30} />}
         type="text"
         onChange={(e) => handleSearch(e)}
@@ -48,7 +49,7 @@ const ReservationsTable = ({ tableData }: TableProps) => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody emptyContent="No data available">
           {rows.map((data) => (
             <TableRow key={data.number}>
               <TableCell> {data.number} </TableCell>

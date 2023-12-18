@@ -1,40 +1,36 @@
 "use client";
-import { useSidebarContext } from "@/context/context";
+import { useSidebarContext } from "@/context/SidebarContext";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
-import {MdBookmark, MdDashboard, MdHotel, MdPeople} from "react-icons/md"
+import { MdBookmark, MdDashboard, MdHotel, MdPeople } from "react-icons/md";
 
 const SideBarLinks: { title: string; href: string; icon: React.ReactNode }[] = [
   {
     title: "Dashboard",
     href: "/",
-    icon: <MdDashboard size={25} />
+    icon: <MdDashboard size={25} />,
   },
   {
     title: "Rooms",
     href: "/rooms",
-    icon: <MdHotel size={25}/>
-
+    icon: <MdHotel size={25} />,
   },
   {
     title: "Reservations",
     href: "/reservations",
-    icon: <MdBookmark size={25}/>
-
+    icon: <MdBookmark size={25} />,
   },
   {
     title: "Customers",
     href: "/customers",
-    icon: <MdPeople size={25}/>
-
+    icon: <MdPeople size={25} />,
   },
 ];
 const Sidebar = () => {
   const { isOpen } = useSidebarContext();
-  const router = useRouter();
-  const pathName = usePathname()
+  const pathName = usePathname();
   return (
     <section
       className={`py-6 ${
@@ -43,12 +39,23 @@ const Sidebar = () => {
           : "w-0 min-h-screen overflow-hidden transition-all duration-500"
       }`}
     >
-      <Listbox
-        aria-label="Actions"
-      >
+      <Listbox aria-label="Actions">
         {SideBarLinks.map((link) => (
-          <ListboxItem as={Link} href={link.href} key={link.title} endContent={link.icon} className={`text-text mt-2 ${pathName === link.href && `bg-gray-300 text-black dark:text-text dark:bg-bg-light`}`}> {link.title} </ListboxItem>
-        ))} 
+          <ListboxItem
+            aria-label="menu-item"
+            as={Link}
+            href={link.href}
+            key={link.title}
+            endContent={link.icon}
+            className={`text-text mt-2 ${
+              pathName === link.href &&
+              `bg-gray-300 text-black dark:text-text dark:bg-bg-light`
+            }`}
+          >
+            {" "}
+            {link.title}{" "}
+          </ListboxItem>
+        ))}
       </Listbox>
     </section>
   );

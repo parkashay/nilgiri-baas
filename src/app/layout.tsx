@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import { GlobalContextProvider } from "@/context/context";
+import { GlobalContextProvider } from "@/context/SidebarContext";
 import { ThemeContext } from "@/context/ThemeContext";
 import TopLoadingBar from "@/components/TopLoadingBar";
 
