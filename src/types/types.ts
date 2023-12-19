@@ -2,7 +2,7 @@ export type Room = {
   number: string | number;
   price: number;
   capacity: number;
-  vacancy: boolean;
+  isVacant: boolean;
 };
 
 export type Reservation = {
@@ -18,7 +18,7 @@ export type Customer = {
   phone?: string;
   email?: string;
   address: string;
-  bookedRoom: string | number;
+  roomId: string | number;
 }
 
 export type BreadCrumbType = {

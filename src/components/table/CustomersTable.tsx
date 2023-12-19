@@ -62,7 +62,7 @@ const CustomersTable = ({ tableData }: TableProps) => {
                 {" "}
                 <Link href={`/users/${data.id}`} color="success" isBlock showAnchorIcon>{data.name}</Link>{" "}
               </TableCell>
-              <TableCell> {data.bookedRoom}</TableCell>
+              <TableCell> {data.roomId}</TableCell>
               <TableCell>
                 <span className="flex items-center gap-1">
                   {" "}

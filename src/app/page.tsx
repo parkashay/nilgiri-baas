@@ -25,7 +25,7 @@ const reviews: CustomerReview[] = [
     avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
     rating: 4.5,
     comment:
-      "Kaam raincha yr. ekchhin jhan hotel ma gayera raila hanam vaneko sala paisa matra badhi liyo majjai ayena.",
+      "over ramro raicha. Khana pani sai mitho. majja ayo. feri kaile aam jasto vaisakyo",
     date: "2040/40/40",
     email: "sailakosaili@gmail.com",
   },

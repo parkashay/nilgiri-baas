@@ -11,23 +11,27 @@ datasource db {
 }
 
 model Room {
-  id        Int       @id @default(autoincrement())
-  number    String
-  price     Int
+  id        Int        @id @default(autoincrement())
+  number    String     @unique
+  price     Int        @default(1000)
   capacity  Int
-  vacancy   Boolean
-  customer  Customer?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  isVacant  Boolean    @default(true)
+  customers Customer[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
 }
 
 model Customer {
-  id      Int    @id @default(autoincrement())
-  name    String
-  avatar  String
-  phone   String
-  email   String @unique
-  address String
-  room    Room   @relation(fields: [roomId], references: [id])
-  roomId  Int    @unique
+  id           Int       @id @default(autoincrement())
+  name         String
+  avatar       String?
+  phone        String?
+  email        String?   @unique
+  address      String
+  roomId       Int
+  room         Room      @relation(fields: [roomId], references: [id])
+  checkinDate  DateTime  @default(now())
+  checkoutDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
 }
