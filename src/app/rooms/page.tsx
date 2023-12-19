@@ -1,5 +1,6 @@
 import ReservationsTable from "@/components/table/RoomsTable";
 import { Room } from "@/types/types";
+import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -34,8 +35,7 @@ const tableData: Room[] = [
   },
 ];
 
-
-export default function App() {
+export default async function Page() {
   return (
     <main className="px-3 lg:px-12">
       <h1>Rooms</h1>

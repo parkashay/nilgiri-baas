@@ -11,6 +11,7 @@ import {
   Chip,
 } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
 type TableProps = {
   tableData: Room[];
@@ -31,12 +32,13 @@ const RoomsTable = ({ tableData }: TableProps) => {
   };
   return (
     <section className="flex flex-col w-full">
-      <Input
+       <Input
         size="sm"
-        onChange={(e) => handleSearchChange(e)}
+        startContent={<CiSearch size={30} />}
         type="text"
-        label="Search"
+        onChange={(e) => handleSearchChange(e)}
         className="self-end max-w-[300px] my-2"
+        placeholder="type here to search..."
       />
       <Table aria-label="table">
         <TableHeader>
