@@ -4,30 +4,42 @@ import { Listbox, ListboxItem } from "@nextui-org/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { MdBookmark, MdDashboard, MdHotel, MdPeople } from "react-icons/md";
+import {
+  MdBookmark,
+  MdDashboard,
+  MdHotel,
+  MdPeople,
+  MdReviews,
+} from "react-icons/md";
 
-const SideBarLinks: { title: string; href: string; icon: React.ReactNode }[] = [
-  {
-    title: "Dashboard",
-    href: "/",
-    icon: <MdDashboard size={25} />,
-  },
-  {
-    title: "Rooms",
-    href: "/rooms",
-    icon: <MdHotel size={25} />,
-  },
-  {
-    title: "Reservations",
-    href: "/reservations",
-    icon: <MdBookmark size={25} />,
-  },
-  {
-    title: "Customers",
-    href: "/customers",
-    icon: <MdPeople size={25} />,
-  },
-];
+const SideBarLinks: { title: string; href: string; icon?: React.ReactNode }[] =
+  [
+    {
+      title: "Dashboard",
+      href: "/",
+      icon: <MdDashboard size={25} />,
+    },
+    {
+      title: "Rooms",
+      href: "/rooms",
+      icon: <MdHotel size={25} />,
+    },
+    {
+      title: "Reservations",
+      href: "/reservations",
+      icon: <MdBookmark size={25} />,
+    },
+    {
+      title: "Customers",
+      href: "/customers",
+      icon: <MdPeople size={25} />,
+    },
+    {
+      title: "Reviews",
+      href: "/reviews",
+      icon: <MdReviews size={25} />,
+    },
+  ];
 const Sidebar = () => {
   const { isOpen } = useSidebarContext();
   const pathName = usePathname();

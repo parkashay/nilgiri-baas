@@ -3,46 +3,32 @@ import { CustomerReview } from "@/types/types";
 import { Card, CardHeader, Chip } from "@nextui-org/react";
 import { MdComment } from "react-icons/md";
 
-const reviews: CustomerReview[] = [
-  {
-    name: "Malati Adhikari",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    rating: 1.3,
-    comment: "This website sucks",
-    date: "2025/12/12",
-    email: "malatikobhatti@gmail.com",
-  },
-  {
-    name: "Saili OP",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    rating: 4.5,
-    comment: "ramaako ramai ho 40 katesi",
-    date: "2040/40/40",
-    email: "sailakosaili@gmail.com",
-  },
-  {
-    name: "Harimaya Rimal",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    rating: 4.5,
-    comment:
-      "over ramro raicha. Khana pani sai mitho. majja ayo. feri kaile aam jasto vaisakyo",
-    date: "2040/40/40",
-    email: "sailakosaili@gmail.com",
-  },
-];
-
-export default function Home() {
+async function getLatestReviews() {
+  try {
+    const res = await fetch("http://localhost:3000/api/reviews", {
+      cache: "no-cache",
+    });
+    return res.json();
+  } catch (err) {
+    return undefined;
+  }
+}
+export default async function Home() {
+  const reviews = await getLatestReviews();
+  console.log(reviews)
   return (
     <main className="px-3 lg:px-12">
       <h1>Dashboard</h1>
       <Card className="my-2 pb-6 px-3 lg:px-8 bg-primary dark:bg-bg-dark">
         <CardHeader>
           <Chip size="lg" variant="shadow">
-            <span className="flex gap-2 font-bold items-center"><MdComment size={25} />
-            Recent Reviews:</span>
+            <span className="flex gap-2 font-bold items-center">
+              <MdComment size={25} />
+              Recent Reviews:
+            </span>
           </Chip>
         </CardHeader>
-        <CustomerReviewCard reviews={reviews} />
+        <CustomerReviewCard reviews={[]} />
       </Card>
     </main>
   );

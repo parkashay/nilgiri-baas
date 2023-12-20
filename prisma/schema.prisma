@@ -16,9 +16,10 @@ model Room {
   price     Int        @default(1000)
   capacity  Int
   isVacant  Boolean    @default(true)
-  customers Customer[]
   createdAt DateTime   @default(now())
   updatedAt DateTime?  @updatedAt
+  customers Customer[]
+  Review    Review[]
 }
 
 model Customer {
@@ -29,9 +30,21 @@ model Customer {
   email        String?   @unique
   address      String
   roomId       Int
-  room         Room      @relation(fields: [roomId], references: [id])
   checkinDate  DateTime  @default(now())
   checkoutDate DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime? @updatedAt
+  room         Room      @relation(fields: [roomId], references: [id])
+  review       Review[]
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  star       Float
+  comment    String   @db.Text
+  date       DateTime @default(now())
+  customerId Int
+  roomId     Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+  room       Room     @relation(fields: [roomId], references: [id])
 }

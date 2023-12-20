@@ -1,25 +1,29 @@
 import ReservationsTable from "@/components/table/ReservationsTable";
-import { Reservation } from "@/types/types";
+import { Customer, Reservation } from "@/types/types";
 import React from "react";
 
-const ReservtionData: Reservation[] = [
-  {
-    number: 203,
-    reservedBy: "Mukunda Nath",
-    duration: "Monday - Friday",
-  },
-  {
-    number: "305 A",
-    reservedBy: "Hari Prasad",
-    duration: "2023/12/07 - 2024/01/04",
-  },
-];
-const page = () => {
+async function getCustomers(): Promise<Customer[] | undefined> {
+  try {
+    const res = await fetch("http://localhost:3000/api/customers", {
+      cache: "no-cache",
+    });
+    const customers = await res.json();
+    const reservations = customers?.filter(
+      (customer: Customer) => !customer.checkoutDate
+    );
+    return reservations;
+  } catch (err) {
+    return undefined;
+  }
+}
+const page = async () => {
+  const reservations = await getCustomers();
+
   return (
     <main className="px-3 lg:px-12">
       <h1>Reservations</h1>
       <section>
-        <ReservationsTable tableData={ReservtionData} />
+        {reservations && <ReservationsTable tableData={reservations || []} />}
       </section>
     </main>
   );

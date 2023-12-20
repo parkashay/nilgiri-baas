@@ -1,5 +1,5 @@
 "use client";
-import { Reservation } from "@/types/types";
+import { Customer } from "@/types/types";
 import {
   Table,
   TableHeader,
@@ -13,7 +13,7 @@ import { ChangeEvent, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
 type TableProps = {
-  tableData: Reservation[];
+  tableData: Customer[];
 };
 
 const TableColumns = ["Room Number", "Reserved By", "Duration"];
@@ -51,10 +51,14 @@ const ReservationsTable = ({ tableData }: TableProps) => {
         </TableHeader>
         <TableBody emptyContent="No data available">
           {rows.map((data) => (
-            <TableRow key={data.number}>
-              <TableCell> {data.number} </TableCell>
-              <TableCell> {data.reservedBy} </TableCell>
-              <TableCell> {data.duration} </TableCell>
+            <TableRow key={data.id}>
+              <TableCell> {data.room?.number} </TableCell>
+              <TableCell> {data.name} </TableCell>
+              <TableCell>
+                {" "}
+                {String(new Date(data.checkinDate).toDateString())} -{" "}
+                {String(new Date(data.checkoutDate).toDateString())}{" "}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

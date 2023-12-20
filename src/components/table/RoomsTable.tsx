@@ -51,7 +51,7 @@ const RoomsTable = ({ tableData }: TableProps) => {
     </TableHeader>
     <TableBody emptyContent="No data available">
       {rows.map((data) => (
-        <TableRow key={data.number}>
+        <TableRow key={data.id}>
           <TableCell> {data.number} </TableCell>
           <TableCell> {data.capacity} </TableCell>
           <TableCell> NPR. {data.price}/- </TableCell>

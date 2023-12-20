@@ -5,8 +5,10 @@ import React from "react";
 
 async function getCustomers() {
   try {
-    const customers = await fetch("http://localhost:3000/api/customers");
-    return customers.json();
+    const res = await fetch("http://localhost:3000/api/customers", {cache: 'no-cache'});
+    const customers = await res.json();
+    if(!customers.err) return customers;
+    return undefined;
   } catch (err) {
     return undefined;
   }

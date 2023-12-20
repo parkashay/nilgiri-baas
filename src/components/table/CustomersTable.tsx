@@ -60,7 +60,14 @@ const CustomersTable = ({ tableData }: TableProps) => {
               </TableCell>
               <TableCell>
                 {" "}
-                <Link href={`/users/${data.id}`} color="success" isBlock showAnchorIcon>{data.name}</Link>{" "}
+                <Link
+                  href={`/customers/${data.id}`}
+                  color="success"
+                  isBlock
+                  showAnchorIcon
+                >
+                  {data.name}
+                </Link>{" "}
               </TableCell>
               <TableCell> {data.roomId}</TableCell>
               <TableCell>

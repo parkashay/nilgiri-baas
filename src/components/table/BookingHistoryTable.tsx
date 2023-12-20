@@ -1,4 +1,5 @@
 "use client";
+import { Customer, Room } from "@/types/types";
 import {
   Table,
   TableHeader,
@@ -8,19 +9,30 @@ import {
   TableCell,
 } from "@nextui-org/react";
 
-export default function BookingHistoryTable() {
+interface BookingHistoryTableProps {
+  room: Room;
+  customer: Customer;
+}
+export default function BookingHistoryTable({
+  room,
+  customer,
+}: BookingHistoryTableProps) {
   return (
     <Table aria-label="booking history table" className="my-3">
       <TableHeader>
-        <TableColumn>Date</TableColumn>
         <TableColumn>Room Number</TableColumn>
         <TableColumn>Check In - Check Out</TableColumn>
       </TableHeader>
       <TableBody>
         <TableRow key="1">
-          <TableCell> 2023/12/10 </TableCell>
-          <TableCell> 203 A </TableCell>
-          <TableCell> 2023/12/12 - 2023/12/20 </TableCell>
+          <TableCell> {room.number} </TableCell>
+          <TableCell>
+            {" "}
+            {String(new Date(customer.checkinDate).toDateString())} -{" "}
+            {customer.checkoutDate
+              ? String(new Date(customer.checkoutDate).toDateString())
+              : "not checked out"}{" "}
+          </TableCell>
         </TableRow>
       </TableBody>
     </Table>

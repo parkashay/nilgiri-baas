@@ -1,4 +1,5 @@
 export type Room = {
+  id: number;
   number: string | number;
   price: number;
   capacity: number;
@@ -6,10 +7,11 @@ export type Room = {
 };
 
 export type Reservation = {
-  number: string|number;
+  id: number;
+  number: string | number;
   reservedBy: string;
   duration: string;
-}
+};
 
 export type Customer = {
   id: number;
@@ -19,18 +21,23 @@ export type Customer = {
   email?: string;
   address: string;
   roomId: string | number;
-}
+  room?: Room;
+  checkinDate?: any;
+  checkoutDate?: any;
+  createdAt?: any;
+  updatedAt?: any;
+};
 
 export type BreadCrumbType = {
   title: string;
   href?: string;
-}
+};
 
 export type CustomerReview = {
-  name: string;
-  avatar: string;
-  rating: number;
+  id: number;
+  star: number;
   comment: string;
   date: string;
-  email?: string;
-}
+  customer: Customer;
+  room: Room;
+};
