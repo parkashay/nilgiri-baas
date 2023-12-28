@@ -11,8 +11,9 @@ import {
   Chip,
   Avatar,
   Link,
+  Pagination,
 } from "@nextui-org/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { CiLocationOn, CiMail, CiPhone, CiSearch } from "react-icons/ci";
 
 type TableProps = {
@@ -23,6 +24,14 @@ const TableColumns = ["", "Name", "Booked Room", "Address", "Email/Phone"];
 
 const CustomersTable = ({ tableData }: TableProps) => {
   const [rows, setRows] = useState(tableData);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 7;
+  const pages = Math.ceil(tableData.length / rowsPerPage);
+  const changedRows = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    setRows(tableData.slice(start, end));
+  }, [page, tableData]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setRows(
@@ -43,7 +52,19 @@ const CustomersTable = ({ tableData }: TableProps) => {
         className="self-end max-w-[300px] my-2"
         placeholder="type here to search..."
       />
-      <Table aria-label="table">
+      <Table aria-label="table" bottomContent={
+         <div className="flex w-full justify-center">
+         <Pagination
+           isCompact
+           showControls
+           showShadow
+           color="secondary"
+           page={page}
+           total={pages}
+           onChange={(page) => setPage(page)}
+         />
+       </div>
+      }>
         <TableHeader>
           {TableColumns.map((column) => (
             <TableColumn key={column} className="text-base">
@@ -69,7 +90,7 @@ const CustomersTable = ({ tableData }: TableProps) => {
                   {data.name}
                 </Link>{" "}
               </TableCell>
-              <TableCell> {data.roomId}</TableCell>
+              <TableCell> {data.room?.number}</TableCell>
               <TableCell>
                 <span className="flex items-center gap-1">
                   {" "}

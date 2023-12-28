@@ -3,7 +3,7 @@ import React from "react";
 
 async function getReviews() {
   try {
-    const res = await fetch("http://localhost:3000/api/reviews", {
+    const res = await fetch(`${process.env.BASE_URL}/api/reviews`, {
       cache: "no-cache",
     });
     return res.json();

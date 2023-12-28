@@ -1,17 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Room {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   number    String     @unique
   price     Int        @default(1000)
   capacity  Int
@@ -23,13 +20,13 @@ model Room {
 }
 
 model Customer {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   avatar       String?
   phone        String?
   email        String?   @unique
   address      String
-  roomId       Int
+  roomId       String    @db.ObjectId
   checkinDate  DateTime  @default(now())
   checkoutDate DateTime?
   createdAt    DateTime  @default(now())
@@ -39,12 +36,12 @@ model Customer {
 }
 
 model Review {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   star       Float
-  comment    String   @db.Text
+  comment    String
   date       DateTime @default(now())
-  customerId Int
-  roomId     Int
+  customerId String   @db.ObjectId
+  roomId     String   @db.ObjectId
   customer   Customer @relation(fields: [customerId], references: [id])
   room       Room     @relation(fields: [roomId], references: [id])
 }

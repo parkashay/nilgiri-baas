@@ -1,20 +1,24 @@
+import { Review } from "@prisma/client";
+
 export type Room = {
-  id: number;
+  id: string;
   number: string | number;
   price: number;
   capacity: number;
   isVacant: boolean;
+  customers?: Customer[];
+  reviews?: Review[];
 };
 
 export type Reservation = {
-  id: number;
+  id: string;
   number: string | number;
   reservedBy: string;
   duration: string;
 };
 
 export type Customer = {
-  id: number;
+  id: string;
   name: string;
   avatar?: string;
   phone?: string;

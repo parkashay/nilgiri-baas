@@ -4,7 +4,7 @@ import React from "react";
 
 async function getCustomers(): Promise<Customer[] | undefined> {
   try {
-    const res = await fetch("http://localhost:3000/api/customers", {
+    const res = await fetch(`${process.env.BASE_URL}/api/customers`, {
       cache: "no-cache",
     });
     const customers = await res.json();
@@ -23,7 +23,7 @@ const page = async () => {
     <main className="px-3 lg:px-12">
       <h1>Reservations</h1>
       <section>
-        {reservations && <ReservationsTable tableData={reservations || []} />}
+        <ReservationsTable tableData={reservations || []} />
       </section>
     </main>
   );

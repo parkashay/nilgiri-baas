@@ -5,7 +5,7 @@ import React from "react";
 
 async function getCustomers() {
   try {
-    const res = await fetch("http://localhost:3000/api/customers", {cache: 'no-cache'});
+    const res = await fetch(`${process.env.BASE_URL}/api/customers`, {cache: 'no-cache'});
     const customers = await res.json();
     if(!customers.err) return customers;
     return undefined;
