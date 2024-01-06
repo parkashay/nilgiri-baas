@@ -1,4 +1,5 @@
 "use client";
+import { refetchAtom } from "@/jotai/atoms";
 import { Room } from "@/types/types";
 import {
   Table,
@@ -17,8 +18,10 @@ import {
   ModalFooter,
   ModalBody,
 } from "@nextui-org/react";
+import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { CiSearch, CiTrash } from "react-icons/ci";
 
 type TableProps = {
@@ -35,6 +38,9 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
     { id: string; roomNumber: string } | undefined
   >();
   const router = useRouter();
+
+  const [refetch, setRefetch] = useAtom(refetchAtom);
+
   useEffect(() => {
     setRows(rooms);
   }, [rooms]);
@@ -53,12 +59,29 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
     onOpenChange();
   };
 
-  const deleteRoom = async (id: string) => {
-    const res = await fetch(`/api/rooms?id=${id}`, {
-      method: "DELETE",
+  const deleteRoom = (id: string) => {
+    const deleteRoom = new Promise((resolve, reject) => {
+      fetch(`/api/rooms?id=${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            setRefetch(!refetch);
+            resolve("Room has been deleted.");
+          } else {
+            reject("OOPS!! Some error occured");
+          }
+        })
+        .catch(() => {
+          reject("Something went wrong !!");
+        });
+    });
+    toast.promise(deleteRoom, {
+      loading: "Please wait...",
+      success: (message) => message + "",
+      error: (message) => message,
     });
     onOpenChange();
-    window.location.reload();
   };
 
   return rows ? (

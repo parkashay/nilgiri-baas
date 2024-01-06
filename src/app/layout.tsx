@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import { GlobalContextProvider } from "@/context/SidebarContext";
 import { ThemeContext } from "@/context/ThemeContext";
 import TopLoadingBar from "@/components/TopLoadingBar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <TopLoadingBar />
+        <Toaster />
         <ThemeContext>
           <GlobalContextProvider>
             <Header />

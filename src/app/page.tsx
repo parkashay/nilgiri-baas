@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <main className="px-3 lg:px-12">
       <h1>Dashboard</h1>
-      <Card className="my-2 pb-6 px-3 lg:px-8 bg-primary dark:bg-bg-dark">
+      <Card className="my-2 pb-6 px-3 lg:px-6 bg-primary dark:bg-bg-dark">
         <CardHeader>
           <Chip size="lg" variant="shadow">
             <span className="flex gap-2 font-bold items-center">

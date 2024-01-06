@@ -22,6 +22,31 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function POST(request: NextRequest) {
+  const formData = await request.formData();
+  const roomNumber = String(formData.get("roomNumber"));
+  const capacity = Number(formData.get("capacity"));
+  const price = Number(formData.get("price"));
+  if (!roomNumber || !capacity || !price) {
+    return Response.json({ error: "All fields are required, roomNumber, price and capacity" }, { status: 400 });
+  }
+  
+  try {
+    const prisma = new PrismaClient();
+    const room = await prisma.room.create({
+      data: {
+        number: (roomNumber),
+        capacity: (capacity),
+        price: (price),
+      },
+    });
+    prisma.$disconnect();
+    return Response.json({ room }, { status: 201 });
+  } catch (err) {
+    return Response.json({ err }, { status: 500 });
+  }
+}
+
 export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
   if (id) {
