@@ -24,11 +24,13 @@ const ReservationsTable = ({ tableData }: TableProps) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const pages = Math.ceil(tableData.length / rowsPerPage);
+  
   const changedRows = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    setRows(tableData.slice(start, end));
+    setRows(tableData?.slice(start, end));
   }, [page, tableData]);
+
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setRows(
       tableData.filter((row) =>

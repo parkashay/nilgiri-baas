@@ -30,7 +30,7 @@ const CustomersTable = ({ tableData }: TableProps) => {
   const changedRows = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    setRows(tableData.slice(start, end));
+    setRows(tableData?.slice(start, end));
   }, [page, tableData]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {

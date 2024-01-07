@@ -1,7 +1,4 @@
 import CustomersTable from "@/components/table/CustomersTable";
-import { Customer } from "@/types/types";
-import React from "react";
-
 
 async function getCustomers() {
   try {

@@ -24,7 +24,7 @@ export default function CustomerReviewCard({ reviews }: CustomerReviewProps) {
   const displayedReviews = useMemo(() => {
     const start = (page - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return reviews.slice(start, end);
+    return reviews?.slice(start, end);
   }, [reviews, page]);
   return (
     displayedReviews?.length > 0 && (
