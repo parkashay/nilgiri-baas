@@ -34,7 +34,7 @@ const RoomsTableContainer = () => {
   }, [page, refetch]);
   return (
     <div>
-      <RoomsTable rooms={rooms.rooms} total={rooms.total} />
+      <RoomsTable rooms={rooms?.rooms ?? []} total={rooms?.total} />
     </div>
   );
 };

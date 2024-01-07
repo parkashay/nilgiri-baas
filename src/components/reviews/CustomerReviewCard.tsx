@@ -26,6 +26,7 @@ export default function CustomerReviewCard({ reviews }: CustomerReviewProps) {
     const end = start + itemsPerPage;
     return reviews?.slice(start, end);
   }, [reviews, page]);
+  
   return (
     displayedReviews?.length > 0 && (
       <>

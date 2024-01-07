@@ -26,7 +26,7 @@ export default async function Home() {
             </span>
           </Chip>
         </CardHeader>
-        <CustomerReviewCard reviews={reviews ?? []} />
+        <CustomerReviewCard reviews={reviews.length ? reviews : []} />
       </Card>
     </main>
   );
