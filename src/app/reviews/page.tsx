@@ -18,7 +18,7 @@ const page = async () => {
     <section className="px-3 lg:px-12">
       <h1>Reviews</h1>
       <div className="my-6">
-        <CustomerReviewCard reviews={reviews.length ? reviews : []} />
+        <CustomerReviewCard reviews={reviews?.length ? reviews : []} />
       </div>
     </section>
   );
