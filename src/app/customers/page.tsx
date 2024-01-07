@@ -2,7 +2,7 @@ import CustomersTable from "@/components/table/CustomersTable";
 
 async function getCustomers() {
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/customers`, {cache: 'no-cache'});
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/customers`, {cache: 'no-cache'});
     const customers = await res.json();
     if(!customers.err) return customers;
     return undefined;

@@ -6,7 +6,7 @@ import { MdEmail, MdLocationPin, MdPerson, MdPhone } from "react-icons/md";
 async function getCustomer(customerId: string): Promise<Customer | undefined> {
   try {
     const res = await fetch(
-      `${process.env.BASE_URL}/api/customers/${customerId}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/customers/${customerId}`
     , {cache: 'no-cache'});
     const data = await res.json();
     return data;

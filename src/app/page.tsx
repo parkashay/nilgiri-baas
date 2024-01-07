@@ -4,7 +4,7 @@ import { MdComment } from "react-icons/md";
 
 async function getLatestReviews() {
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/reviews?take=4`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews?take=4`, {
       cache: "no-cache",
     });
     return res.json();

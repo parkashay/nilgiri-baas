@@ -155,7 +155,8 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
           ))}
         </TableBody>
       </Table>
-      <div className="my-2">
+      {
+        total > 10 ? <div className="my-2">
         <Pagination
           total={Math.ceil(total / 10)}
           initialPage={1}
@@ -165,7 +166,8 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
             router.push(`?page=${e}`);
           }}
         />
-      </div>
+      </div> : ""
+      }
     </section>
   ) : (
     ""
