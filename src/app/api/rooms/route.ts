@@ -28,16 +28,19 @@ export async function POST(request: NextRequest) {
   const capacity = Number(formData.get("capacity"));
   const price = Number(formData.get("price"));
   if (!roomNumber || !capacity || !price) {
-    return Response.json({ error: "All fields are required, roomNumber, price and capacity" }, { status: 400 });
+    return Response.json(
+      { error: "All fields are required, roomNumber, price and capacity" },
+      { status: 400 }
+    );
   }
-  
+
   try {
     const prisma = new PrismaClient();
     const room = await prisma.room.create({
       data: {
-        number: (roomNumber),
-        capacity: (capacity),
-        price: (price),
+        number: roomNumber,
+        capacity: capacity,
+        price: price,
       },
     });
     prisma.$disconnect();
@@ -52,7 +55,7 @@ export async function DELETE(request: NextRequest) {
   if (id) {
     try {
       const prisma = new PrismaClient();
-      const deleteReviews = await prisma.review.deleteMany({
+      await prisma.review.deleteMany({
         where: {
           roomId: id,
           customer: {
@@ -60,7 +63,7 @@ export async function DELETE(request: NextRequest) {
           },
         },
       });
-      const deleteCustomers = await prisma.customer.deleteMany({
+      await prisma.customer.deleteMany({
         where: {
           roomId: id,
         },

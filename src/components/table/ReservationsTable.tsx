@@ -82,7 +82,7 @@ const ReservationsTable = ({ tableData }: TableProps) => {
               <TableCell>
                 {" "}
                 {String(new Date(data.checkinDate).toDateString())} -{" "}
-                {String(new Date(data.checkoutDate).toDateString())}{" "}
+                {data.checkoutDate ? String(new Date(data.checkoutDate).toDateString()) : "Not Checked out"}{" "}
               </TableCell>
             </TableRow>
           ))}

@@ -1,4 +1,5 @@
 "use client";
+import { refetchAtom } from "@/jotai/atoms";
 import { Customer } from "@/types/types";
 import {
   Table,
@@ -13,7 +14,8 @@ import {
   Link,
   Pagination,
 } from "@nextui-org/react";
-import { ChangeEvent, useMemo, useState } from "react";
+import { useAtom } from "jotai";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { CiLocationOn, CiMail, CiPhone, CiSearch } from "react-icons/ci";
 
 type TableProps = {
@@ -22,20 +24,39 @@ type TableProps = {
 
 const TableColumns = ["", "Name", "Booked Room", "Address", "Email/Phone"];
 
-const CustomersTable = ({ tableData }: TableProps) => {
-  const [rows, setRows] = useState(tableData);
+const CustomersTable = () => {
+  const [rows, setRows] = useState<Customer[]>();
   const [page, setPage] = useState(1);
   const rowsPerPage = 7;
-  const pages = Math.ceil(tableData.length / rowsPerPage);
-  const changedRows = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    setRows(tableData?.slice(start, end));
-  }, [page, tableData]);
+  const [refetch] = useAtom(refetchAtom);
+  const [filteredRows, setFilteredRows] = useState<Customer[]>();
 
+  useEffect(() => {
+    async function getCustomers() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/customers`,
+          { cache: "no-cache" }
+        );
+        const customers = await res.json();
+        if (!customers.err) {
+          setRows(customers);
+        }
+        return undefined;
+      } catch (err) {
+        return undefined;
+      }
+    }
+    getCustomers();
+  }, [refetch]);
+
+  useEffect(() => {
+    setFilteredRows(rows?.slice((page - 1) * rowsPerPage, page * rowsPerPage));
+  },[rows, page])
+  
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setRows(
-      tableData.filter((row) =>
+    setFilteredRows(
+      rows?.filter((row) =>
         String(Object.values(row))
           .toLowerCase()
           .includes(e.target.value.toLowerCase())
@@ -52,19 +73,22 @@ const CustomersTable = ({ tableData }: TableProps) => {
         className="self-end max-w-[300px] my-2"
         placeholder="type here to search..."
       />
-      <Table aria-label="table" bottomContent={
-         <div className="flex w-full justify-center">
-         <Pagination
-           isCompact
-           showControls
-           showShadow
-           color="secondary"
-           page={page}
-           total={pages}
-           onChange={(page) => setPage(page)}
-         />
-       </div>
-      }>
+      <Table
+        aria-label="table"
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="secondary"
+              page={page}
+              total={Math.ceil(rows ? rows?.length / rowsPerPage : 0)}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
+      >
         <TableHeader>
           {TableColumns.map((column) => (
             <TableColumn key={column} className="text-base">
@@ -73,8 +97,8 @@ const CustomersTable = ({ tableData }: TableProps) => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody emptyContent="No data available">
-          {rows.map((data) => (
+        <TableBody items={filteredRows ?? []} emptyContent="No data available">
+          {(data) => (
             <TableRow key={data.id}>
               <TableCell>
                 <Avatar showFallback src={data.avatar} />
@@ -110,7 +134,7 @@ const CustomersTable = ({ tableData }: TableProps) => {
                 )}
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </section>

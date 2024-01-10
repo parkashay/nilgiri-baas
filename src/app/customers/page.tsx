@@ -1,22 +1,15 @@
+import AddNewCustomer from "@/components/customers/AddNewCustomer";
 import CustomersTable from "@/components/table/CustomersTable";
 
-async function getCustomers() {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/customers`, {cache: 'no-cache'});
-    const customers = await res.json();
-    if(!customers.err) return customers;
-    return undefined;
-  } catch (err) {
-    return undefined;
-  }
-}
 const page = async () => {
-  const customers = await getCustomers();
   return (
     <main className="px-3 lg:px-12">
       <h1>Customers</h1>
+      <div className="my-2 flex justify-end">
+        <AddNewCustomer />
+      </div>
       <section>
-        <CustomersTable tableData={customers ?? []} />
+        <CustomersTable />
       </section>
     </main>
   );
