@@ -19,11 +19,10 @@ export interface CustomerFormProps {
 const CustomerForm = ({ data, handleChange }: CustomerFormProps) => {
   const [rooms, setRooms] = useState<Room[] | undefined>();
   useEffect(() => {
-    fetch("/api/rooms/vacant")
+    fetch("/api/rooms/vacant", {cache: "no-store"})
       .then((res) => res.json())
       .then((data) => setRooms(data));
   }, []);
-  console.log(rooms);
   return (
     <>
       <Input
