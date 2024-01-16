@@ -20,6 +20,7 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
+  Spinner,
 } from "@nextui-org/react";
 import { useAtom } from "jotai";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -50,6 +51,15 @@ const CustomersTable = () => {
   const [aboutToCheckout, setAboutToCheckout] = useState<
     { customerId: string; roomId: string; name: string } | undefined
   >();
+  const [fetching, setFetching] = useState(true)
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFetching(false)
+      clearTimeout(timeoutId)
+    }, 5000)
+    return () => clearTimeout(timeoutId)
+  })
 
   useEffect(() => {
     async function getCustomers() {
@@ -177,7 +187,7 @@ const CustomersTable = () => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody items={filteredRows ?? []} emptyContent="No data available">
+        <TableBody items={filteredRows ?? []} emptyContent={fetching ? <Spinner /> : "No customers"}>
           {(data) => (
             <TableRow key={data.id}>
               <TableCell>
@@ -215,9 +225,9 @@ const CustomersTable = () => {
               </TableCell>
               <TableCell>
                 {data.checkoutDate ? (
-                  <span className="bg-primary/70 px-3 py-2 rounded flex items-center justify-center gap-2 text-text w-full">
-                    Checked Out <MdCheckCircle size={20} />
-                  </span>
+                  <Chip color="primary">
+                    <span className="flex gap-2 items-center">Checked Out <MdCheckCircle size={20} /></span>
+                  </Chip>
                 ) : (
                   <button
                     onClick={() =>
@@ -227,7 +237,7 @@ const CustomersTable = () => {
                         data.name
                       )
                     }
-                    className="bg-danger/60 px-3 py-2 rounded w-full flex items-center justify-center text-text"
+                    className="bg-danger/60 px-3 py-2 rounded w-full flex items-center justify-center text-text hover:bg-danger"
                   >
                     <MdLogout size={20} />
                   </button>

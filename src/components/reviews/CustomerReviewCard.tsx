@@ -28,7 +28,7 @@ export default function CustomerReviewCard({ reviews }: CustomerReviewProps) {
   }, [reviews, page]);
   
   return (
-    displayedReviews?.length > 0 && (
+    displayedReviews?.length > 0 ? (
       <>
         <section className="flex gap-3 flex-wrap justify-center">
           {displayedReviews.map((review) => (
@@ -96,5 +96,5 @@ export default function CustomerReviewCard({ reviews }: CustomerReviewProps) {
         </div>
       </>
     )
-  );
+  : "No reviews yet !");
 }

@@ -19,7 +19,7 @@ export interface CustomerFormProps {
 const CustomerForm = ({ data, handleChange }: CustomerFormProps) => {
   const [rooms, setRooms] = useState<Room[] | undefined>();
   useEffect(() => {
-    fetch("/api/rooms/vacant", {cache: "no-store"})
+    fetch("/api/rooms/vacant", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => setRooms(data));
   }, []);
@@ -67,9 +67,16 @@ const CustomerForm = ({ data, handleChange }: CustomerFormProps) => {
 
       {rooms ? (
         rooms?.length > 0 ? (
-          <Select items={rooms} label="Room" name="roomId" isRequired>
+          <Select
+            title="Select Room"
+            items={rooms}
+            label="Room"
+            name="roomId"
+            isRequired
+          >
             {(room) => (
               <SelectItem
+                title={room.number}
                 key={room.id}
                 classNames={{ title: "flex justify-between text-primary" }}
               >

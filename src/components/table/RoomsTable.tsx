@@ -17,6 +17,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalBody,
+  Spinner,
 } from "@nextui-org/react";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -32,11 +33,13 @@ type TableProps = {
 const TableColumns = ["Room Number", "Capacity", "Price", "Vacancy", "Action"];
 
 const RoomsTable = ({ rooms, total }: TableProps) => {
+  console.log(rooms);
   const [rows, setRows] = useState(rooms);
   const { isOpen, onOpenChange } = useDisclosure();
   const [aboutToBeDeleted, setAboutToBeDeleted] = useState<
     { id: string; roomNumber: string } | undefined
   >();
+  const [fetching, setFetching] = useState(true);
   const router = useRouter();
 
   const [refetch, setRefetch] = useAtom(refetchAtom);
@@ -84,6 +87,13 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
     onOpenChange();
   };
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFetching(false);
+      clearTimeout(timeoutId);
+    }, 5000);
+    return () => clearTimeout(timeoutId);
+  }, []);
   return rows ? (
     <section className="flex flex-col w-full">
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -125,7 +135,7 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody emptyContent={"No Data Available"}>
+        <TableBody emptyContent={ fetching ? <Spinner /> : "No Data Available"}>
           {rows.map((data) => (
             <TableRow key={data.id}>
               <TableCell> {data.number} </TableCell>
@@ -155,19 +165,21 @@ const RoomsTable = ({ rooms, total }: TableProps) => {
           ))}
         </TableBody>
       </Table>
-      {
-        total > 10 ? <div className="my-2">
-        <Pagination
-          total={Math.ceil(total / 10)}
-          initialPage={1}
-          isCompact
-          showControls
-          onChange={(e) => {
-            router.push(`?page=${e}`);
-          }}
-        />
-      </div> : ""
-      }
+      {total > 10 ? (
+        <div className="my-2">
+          <Pagination
+            total={Math.ceil(total / 10)}
+            initialPage={1}
+            isCompact
+            showControls
+            onChange={(e) => {
+              router.push(`?page=${e}`);
+            }}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   ) : (
     ""

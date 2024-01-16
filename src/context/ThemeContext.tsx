@@ -8,7 +8,7 @@ export function ThemeContext({children}: { children: React.ReactNode }) {
   const router = useRouter()
   return (
     <NextUIProvider navigate={router.push}>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider attribute="class" defaultTheme='light'>
         {children}
       </NextThemesProvider>
     </NextUIProvider>

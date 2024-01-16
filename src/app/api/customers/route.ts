@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     const prisma = new PrismaClient();
     const customers = await prisma.customer.findMany({
+      orderBy: {checkoutDate: "asc"},
       include: { room: true },
     });
     prisma.$disconnect();
