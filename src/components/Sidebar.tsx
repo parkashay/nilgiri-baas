@@ -47,7 +47,7 @@ const Sidebar = () => {
     <section
       className={`py-6 ${
         isOpen
-          ? `absolute left-0 z-20 md:relative min-h-screen w-[250px] overflow-y-auto px-3 bg-bg-light dark:bg-bg-dark transition-all duration-500`
+          ? `absolute left-0 z-20 md:relative min-h-screen min-w-[250px] overflow-y-auto px-3 bg-bg-light dark:bg-bg-dark transition-all duration-500`
           : "w-0 min-h-screen overflow-hidden transition-all duration-500"
       }`}
     >

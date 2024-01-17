@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { prisma } from "~/prisma/prisma";
 
 export async function GET(request: NextRequest) {
   const takeValue = request.nextUrl.searchParams.get("take");
   try {
-    const prisma = new PrismaClient();
     const reviews = await prisma.review.findMany({
       include: {
         customer: true,

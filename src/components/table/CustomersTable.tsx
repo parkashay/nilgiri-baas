@@ -25,12 +25,9 @@ import {
 import { useAtom } from "jotai";
 import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { CiLocationOn, CiMail, CiPhone, CiSearch } from "react-icons/ci";
+import { CiLocationOn, CiMail, CiPhone, CiSearch, CiTrash } from "react-icons/ci";
 import { MdCheckCircle, MdLogout } from "react-icons/md";
 
-type TableProps = {
-  tableData: Customer[];
-};
 
 const TableColumns = [
   "",
@@ -141,7 +138,6 @@ const CustomersTable = () => {
               <ModalHeader className="flex flex-col gap-1">
                 Is {aboutToCheckout?.name} checking out ?
               </ModalHeader>
-              <ModalBody></ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
@@ -224,12 +220,13 @@ const CustomersTable = () => {
                 )}
               </TableCell>
               <TableCell>
-                {data.checkoutDate ? (
-                  <Chip color="primary">
+               <div className="flex gap-2 justify-between items-center">
+               {data.checkoutDate ? (
+                  <Chip color="primary" size="lg">
                     <span className="flex gap-2 items-center">Checked Out <MdCheckCircle size={20} /></span>
                   </Chip>
                 ) : (
-                  <button
+                  <Button
                     onClick={() =>
                       handleCheckout(
                         data.id,
@@ -237,11 +234,27 @@ const CustomersTable = () => {
                         data.name
                       )
                     }
-                    className="bg-danger/60 px-3 py-2 rounded w-full flex items-center justify-center text-text hover:bg-danger"
+                    color="warning"
+                    className="w-full max-w-[160px]"
                   >
                     <MdLogout size={20} />
-                  </button>
+                  </Button>
                 )}
+                <div>
+                  <Button color="danger" 
+                  onClick={async () => {
+                    toast.promise(fetch(`/api/customers/${data.id}`, {
+                      method: "DELETE",
+                      cache: "no-store",
+                    }).then(() => setRefetch(!refetch)), {
+                      error: "Error Deleting Data",
+                      loading: "Please Wait...",
+                      success: "User has been deleted !"
+                    })
+                  }}
+                  > <CiTrash size={20} /> </Button>
+                </div>
+               </div>
               </TableCell>
             </TableRow>
           )}

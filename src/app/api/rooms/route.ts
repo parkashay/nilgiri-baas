@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { prisma } from "~/prisma/prisma";
 
 export async function GET(request: NextRequest) {
   const page = Number(request.nextUrl.searchParams.get("page"));
   try {
-    const prisma = new PrismaClient();
     const count = await prisma.room.count();
     const rooms = await prisma.room.findMany({
       orderBy: { updatedAt: "desc" },
@@ -35,7 +34,6 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const prisma = new PrismaClient();
     const room = await prisma.room.create({
       data: {
         number: roomNumber,
@@ -54,7 +52,6 @@ export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
   if (id) {
     try {
-      const prisma = new PrismaClient();
       await prisma.review.deleteMany({
         where: {
           roomId: id,

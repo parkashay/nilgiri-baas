@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { prisma } from "~/prisma/prisma";
 
 export async function GET(request: NextRequest) {
-  const page = Number(request.nextUrl.searchParams.get("page"));
   try {
-    const prisma = new PrismaClient();
     const customers = await prisma.customer.findMany({
       orderBy: {checkoutDate: "asc"},
       include: { room: true },
@@ -23,8 +21,11 @@ export async function POST(request: NextRequest) {
   const phone = String(formData.get("phone"));
   const email = String(formData.get("email"));
   const roomId = String(formData.get("roomId"));
-  const checkinDate = String(formData.get("checkinDate"));
-  console.log(checkinDate);
+  let checkinDate: any = String(formData.get('checkinDate'))
+  
+  if(checkinDate) checkinDate = new Date(checkinDate)
+
+  
   if (!name || !address || !phone || !roomId) {
     return Response.json(
       { error: "All fields are required, name, address, phone and roomId" },
@@ -33,7 +34,6 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const prisma = new PrismaClient();
     await prisma.room.update({
       where: {
         id: roomId,
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         phone,
         email,
         roomId,
-        checkinDate: checkinDate || undefined,
+        checkinDate: checkinDate ?? undefined,
       },
     });
     prisma.$disconnect();

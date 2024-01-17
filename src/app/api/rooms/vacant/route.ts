@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "~/prisma/prisma";
 
 export async function GET() {
   try {
-    const prisma = new PrismaClient();
     const rooms = await prisma.room.findMany({
       where: {
         isVacant: true,
